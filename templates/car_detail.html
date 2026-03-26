@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% block title %}{{ car.name }} - LuxeDrive{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                <!-- Car Image -->
+                <div class="relative h-64 lg:h-auto">
+                    <img src="{{ car.image_url if car.image_url else car.image }}" alt="{{ car.name }}" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-purple-600 text-white px-4 py-2 rounded-full font-semibold">
+                        {{ car.category }}
+                    </div>
+                </div>
+                
+                <!-- Car Details -->
+                <div class="p-8 lg:p-12">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ car.name }}</h1>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-baseline">
+                            <span class="text-5xl font-bold text-purple-600">{{ car.price_per_day|khr if car.price_per_day else (car.price * 4100)|int }}៛</span>
+                            <span class="text-gray-500 text-xl ml-2">/day</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">${{ "%.0f"|format(car.price_per_day if car.price_per_day else car.price) }} USD per day</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <i class="fas fa-users text-purple-600 text-2xl mb-2"></i>
+                            <p class="text-gray-600 text-sm">Seats</p>
+                            <p class="text-gray-800 font-semibold">{{ car.seats }} People</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <i class="fas fa-cog text-purple-600 text-2xl mb-2"></i>
+                            <p class="text-gray-600 text-sm">Transmission</p>
+                            <p class="text-gray-800 font-semibold">{{ car.transmission }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Features</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {% for feature in car.features %}
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-gray-700">{{ feature }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Availability Status -->
+                    {% if available %}
+                    <div class="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl mr-2"></i>
+                            <span class="text-green-800 font-semibold">Available for Booking</span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                        <div class="flex items-center">
+                            <i class="fas fa-times-circle text-red-600 text-xl mr-2"></i>
+                            <span class="text-red-800 font-semibold">Currently Booked</span>
+                        </div>
+                        <p class="text-red-600 text-sm mt-1">This car is currently unavailable. Please check back later or browse other vehicles.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="space-y-4">
+                        {% if available %}
+                        <button id="bookNowBtn" class="w-full btn-primary text-white py-4 rounded-lg font-semibold text-lg">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            Book Now
+                        </button>
+                        {% else %}
+                        <button disabled class="w-full bg-gray-300 text-gray-500 py-4 rounded-lg font-semibold text-lg cursor-not-allowed">
+                            <i class="fas fa-ban mr-2"></i>
+                            Not Available
+                        </button>
+                        {% endif %}
+                        <button class="w-full bg-gray-100 text-gray-700 py-4 rounded-lg font-semibold text-lg hover:bg-gray-200 transition">
+                            <i class="fas fa-heart mr-2"></i>
+                            Add to Favorites
+                        </button>
+                    </div>
+                    
+                    <!-- Weekend Discount Promotion -->
+                    <div class="mt-6 p-4 bg-gradient-to-r from-purple-600 to-pink-500 rounded-lg shadow-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-gift text-yellow-300 text-3xl mr-3 mt-1 animate-bounce"></i>
+                            <div>
+                                <p class="text-white font-bold text-lg mb-1">🎉 Weekend Special!</p>
+                                <p class="text-yellow-100 text-sm font-semibold">Get 30% OFF on Saturday & Sunday rentals</p>
+                                <p class="text-purple-100 text-xs mt-1">Book any weekend dates to automatically receive the discount!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-1"></i>
+                            <div>
+                                <p class="text-blue-800 font-semibold mb-1">Free Cancellation</p>
+                                <p class="text-blue-600 text-sm">Cancel up to 24 hours before pickup for a full refund</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Information -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <i class="fas fa-shield-alt text-purple-600 text-3xl mb-3"></i>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Fully Insured</h3>
+                <p class="text-gray-600">Comprehensive insurance coverage included in all rentals</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <i class="fas fa-gas-pump text-purple-600 text-3xl mb-3"></i>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Full Tank</h3>
+                <p class="text-gray-600">Pick up and return with a full tank of fuel</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <i class="fas fa-road text-purple-600 text-3xl mb-3"></i>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Unlimited Mileage</h3>
+                <p class="text-gray-600">Drive as much as you want with no mileage restrictions</p>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <a href="/cars" class="text-purple-600 hover:text-purple-700 font-semibold">
+                <i class="fas fa-arrow-left mr-2"></i>Back to All Cars
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Book {{ car.name }}</h2>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <form id="bookingForm" class="space-y-6">
+            <div>
+                <label for="pickupDate" class="block text-sm font-medium text-gray-700 mb-2">Pickup Date</label>
+                <input type="date" id="pickupDate" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none">
+            </div>
+            
+            <div>
+                <label for="returnDate" class="block text-sm font-medium text-gray-700 mb-2">Return Date</label>
+                <input type="date" id="returnDate" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none">
+            </div>
+            
+            <div id="costPreview" class="hidden bg-purple-50 p-4 rounded-lg">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Daily Rate:</span>
+                    <span class="font-semibold text-gray-800">{{ car.price_per_day|khr if car.price_per_day else (car.price * 4100)|int }}៛</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Number of Days:</span>
+                    <span id="daysCount" class="font-semibold text-gray-800">0</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Base Cost:</span>
+                    <span id="baseCost" class="font-semibold text-gray-800">0៛</span>
+                </div>
+                <div id="discountSection" class="hidden">
+                    <div id="weekendDiscount" class="hidden flex justify-between mb-2 text-green-600">
+                        <span class="text-sm"><i class="fas fa-tag mr-1"></i>Weekend Discount (50%):</span>
+                        <span class="font-semibold">-<span id="weekendDiscountAmount">0</span>៛</span>
+                    </div>
+                    <div id="loginDiscount" class="hidden flex justify-between mb-2 text-green-600">
+                        <span class="text-sm"><i class="fas fa-gift mr-1"></i>Login Bonus (20%):</span>
+                        <span class="font-semibold">-<span id="loginDiscountAmount">0</span>៛</span>
+                    </div>
+                </div>
+                <div class="border-t pt-2 mt-2">
+                    <div class="flex justify-between">
+                        <span class="text-lg font-bold text-gray-800">Total:</span>
+                        <span id="totalCost" class="text-lg font-bold text-purple-600" data-price="{{ car.price_per_day if car.price_per_day else car.price }}">0៛</span>
+                    </div>
+                </div>
+                <div id="discountInfo" class="hidden mt-3 p-3 bg-green-50 rounded-lg">
+                    <p class="text-green-800 text-sm font-semibold"><i class="fas fa-check-circle mr-1"></i>Special discounts applied!</p>
+                </div>
+            </div>
+            
+            <div id="errorMsg" class="hidden bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+            <div id="successMsg" class="hidden bg-green-50 text-green-600 px-4 py-3 rounded-lg text-sm"></div>
+            
+            <button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                Confirm Booking
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const bookNowBtn = document.getElementById('bookNowBtn');
+    const bookingModal = document.getElementById('bookingModal');
+    const closeModal = document.getElementById('closeModal');
+    const bookingForm = document.getElementById('bookingForm');
+    const pickupDate = document.getElementById('pickupDate');
+    const returnDate = document.getElementById('returnDate');
+    const costPreview = document.getElementById('costPreview');
+    const daysCount = document.getElementById('daysCount');
+    const totalCost = document.getElementById('totalCost');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    
+    const carPrice = {{ car.price_per_day or car.price }};
+    const carId = {{ car.id }};
+    const USD_TO_KHR = 4100;
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    pickupDate.min = today;
+    returnDate.min = today;
+    
+    bookNowBtn.addEventListener('click', async () => {
+        // Check if user is logged in
+        const response = await fetch('/api/check-session');
+        const data = await response.json();
+        
+        if (!data.logged_in) {
+            if (confirm('Please login to book a car. Would you like to login now?')) {
+                window.location.href = '/login';
+            }
+            return;
+        }
+        
+        bookingModal.classList.remove('hidden');
+    });
+    
+    closeModal.addEventListener('click', () => {
+        bookingModal.classList.add('hidden');
+        errorMsg.classList.add('hidden');
+        successMsg.classList.add('hidden');
+    });
+    
+    // Close modal when clicking outside
+    bookingModal.addEventListener('click', (e) => {
+        if (e.target === bookingModal) {
+            bookingModal.classList.add('hidden');
+        }
+    });
+    
+    // Calculate cost when dates change
+    function isWeekendRental(pickupDateStr, returnDateStr) {
+        const pickup = new Date(pickupDateStr);
+        const returnDt = new Date(returnDateStr);
+        let current = new Date(pickup);
+        
+        while (current <= returnDt) {
+            const dayOfWeek = current.getDay(); // 0=Sunday, 1=Monday, 5=Friday, 6=Saturday
+            if (dayOfWeek === 0 || dayOfWeek === 1 || dayOfWeek === 5 || dayOfWeek === 6) {
+                return true;
+            }
+            current.setDate(current.getDate() + 1);
+        }
+        return false;
+    }
+    
+    async function calculateCost() {
+        const pickup = new Date(pickupDate.value);
+        const returnDt = new Date(returnDate.value);
+        
+        if (pickupDate.value && returnDate.value) {
+            const days = Math.ceil((returnDt - pickup) / (1000 * 60 * 60 * 24));
+            
+            if (days > 0) {
+                const baseUSD = days * carPrice;
+                const baseKHR = Math.round(baseUSD * USD_TO_KHR);
+                let totalUSD = baseUSD;
+                let totalKHR = baseKHR;
+                
+                // Check for discounts
+                const hasWeekendDiscount = isWeekendRental(pickupDate.value, returnDate.value);
+                
+                // Check if user has login discount
+                const sessionResponse = await fetch('/api/check-session');
+                const sessionData = await sessionResponse.json();
+                const hasLoginDiscount = sessionData.logged_in; // Simplified - in real app, check if discount is active
+                
+                const discountSection = document.getElementById('discountSection');
+                const discountInfo = document.getElementById('discountInfo');
+                const weekendDiscountEl = document.getElementById('weekendDiscount');
+                const loginDiscountEl = document.getElementById('loginDiscount');
+                
+                let hasDiscount = false;
+                
+                if (hasWeekendDiscount) {
+                    const weekendDiscountAmount = Math.round(baseKHR * 0.5);
+                    totalKHR -= weekendDiscountAmount;
+                    document.getElementById('weekendDiscountAmount').textContent = weekendDiscountAmount.toLocaleString();
+                    weekendDiscountEl.classList.remove('hidden');
+                    hasDiscount = true;
+                } else {
+                    weekendDiscountEl.classList.add('hidden');
+                }
+                
+                // Note: Login discount is applied only once on first booking after login
+                // This preview shows it might be available
+                if (hasLoginDiscount) {
+                    const loginDiscountAmount = Math.round(baseKHR * 0.2);
+                    totalKHR -= loginDiscountAmount;
+                    document.getElementById('loginDiscountAmount').textContent = loginDiscountAmount.toLocaleString();
+                    loginDiscountEl.classList.remove('hidden');
+                    hasDiscount = true;
+                } else {
+                    loginDiscountEl.classList.add('hidden');
+                }
+                
+                if (hasDiscount) {
+                    discountSection.classList.remove('hidden');
+                    discountInfo.classList.remove('hidden');
+                } else {
+                    discountSection.classList.add('hidden');
+                    discountInfo.classList.add('hidden');
+                }
+                
+                // Ensure total doesn't go below 0
+                totalKHR = Math.max(totalKHR, 0);
+                
+                daysCount.textContent = days;
+                document.getElementById('baseCost').textContent = baseKHR.toLocaleString() + '៛';
+                totalCost.textContent = totalKHR.toLocaleString() + '៛';
+                costPreview.classList.remove('hidden');
+            } else {
+                costPreview.classList.add('hidden');
+            }
+        }
+    }
+    
+    pickupDate.addEventListener('change', () => {
+        returnDate.min = pickupDate.value;
+        calculateCost();
+    });
+    
+    returnDate.addEventListener('change', calculateCost);
+    
+    bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        errorMsg.classList.add('hidden');
+        successMsg.classList.add('hidden');
+        
+        try {
+            const response = await fetch('/book/' + carId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    pickup_date: pickupDate.value,
+                    return_date: returnDate.value
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                let message = data.message + ' Booking ID: #' + data.booking_id;
+                if (data.discounts_applied && data.discounts_applied.length > 0) {
+                    message += ' | Discounts: ' + data.discounts_applied.join(', ');
+                    message += ' | You saved: ' + Math.round(data.discount_amount * USD_TO_KHR).toLocaleString() + '៛';
+                }
+                successMsg.textContent = message;
+                successMsg.classList.remove('hidden');
+                bookingForm.reset();
+                costPreview.classList.add('hidden');
+                
+                setTimeout(() => {
+                    bookingModal.classList.add('hidden');
+                    if (confirm('Booking confirmed! Would you like to view your bookings?')) {
+                        window.location.href = '/bookings';
+                    }
+                }, 2000);
+            } else {
+                errorMsg.textContent = data.message;
+                errorMsg.classList.remove('hidden');
+            }
+        } catch (error) {
+            errorMsg.textContent = 'An error occurred. Please try again.';
+            errorMsg.classList.remove('hidden');
+        }
+    });
+</script>
+{% endblock %}

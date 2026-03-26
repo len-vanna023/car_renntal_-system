@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LuxeDrive Car Rental{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .car-card {
+            transition: all 0.3s ease;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <i class="fas fa-car text-purple-600 text-2xl"></i>
+                        <span class="text-xl font-bold text-gray-800">LuxeDrive</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/" class="text-gray-700 hover:text-purple-600 transition">Home</a>
+                    <a href="/cars" class="text-gray-700 hover:text-purple-600 transition">Cars</a>
+                    <a href="/bookings" id="bookingsLinkDesktop" class="hidden text-gray-700 hover:text-purple-600 transition">My Bookings</a>
+                    <a href="/about" class="text-gray-700 hover:text-purple-600 transition">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-purple-600 transition">Contact</a>
+                    <div id="authButtons">
+                        <a href="/login" class="text-gray-700 hover:text-purple-600 transition mr-3">Customer Login</a>
+                        <a href="/admin/login" class="text-white bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 px-4 py-2 rounded-lg transition shadow-md mr-3">
+                            <i class="fas fa-shield-alt mr-1"></i>Admin
+                        </a>
+                        <a href="/signup" class="btn-primary text-white px-4 py-2 rounded-lg">Sign Up</a>
+                    </div>
+                    <div id="userInfo" class="hidden">
+                        <span class="text-gray-700 mr-3">Hello, <span id="userName" class="font-semibold"></span></span>
+                        <a href="/logout" class="text-red-600 hover:text-red-700 transition">Logout</a>
+                    </div>
+                    <div id="adminInfo" class="hidden flex items-center space-x-4">
+                        <a href="/admin/dashboard" class="text-gray-700 hover:text-orange-600 transition">
+                            <i class="fas fa-tachometer-alt mr-1"></i>Dashboard
+                        </a>
+                        <a href="/admin/add-car" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2 rounded-lg transition shadow-md">
+                            <i class="fas fa-plus-circle mr-1"></i>Add Car
+                        </a>
+                        <span class="text-orange-600"><i class="fas fa-shield-alt"></i> <span id="adminName" class="font-semibold"></span></span>
+                        <a href="/admin/logout" class="text-red-600 hover:text-red-700 transition">Logout</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 w-64 h-full bg-white shadow-2xl z-50 md:hidden">
+            <div class="p-4">
+                <button id="closeMobileMenu" class="text-gray-700 mb-6">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+                <div class="flex flex-col space-y-4">
+                    <a href="/" class="text-gray-700 hover:text-purple-600 transition py-2">Home</a>
+                    <a href="/cars" class="text-gray-700 hover:text-purple-600 transition py-2">Cars</a>
+                    <a href="/bookings" id="bookingsLinkMobile" class="hidden text-gray-700 hover:text-purple-600 transition py-2">My Bookings</a>
+                    <a href="/about" class="text-gray-700 hover:text-purple-600 transition py-2">About</a>
+                    <a href="/contact" class="text-gray-700 hover:text-purple-600 transition py-2">Contact</a>
+                    <hr class="my-4">
+                    <div id="mobileAuthButtons">
+                        <a href="/login" class="block text-gray-700 hover:text-purple-600 transition py-2">Customer Login</a>
+                        <a href="/signup" class="block btn-primary text-white px-4 py-2 rounded-lg text-center mt-2">Customer Sign Up</a>
+                        <hr class="my-2">
+                        <p class="text-xs text-gray-500 uppercase font-semibold mb-2">Admin Access</p>
+                        <a href="/admin/login" class="block text-white bg-gradient-to-r from-orange-500 to-red-600 px-4 py-2 rounded-lg text-center">
+                            <i class="fas fa-sign-in-alt mr-1"></i>Admin Login
+                        </a>
+                        <a href="/admin/signup" class="block text-white bg-gradient-to-r from-red-500 to-orange-600 px-4 py-2 rounded-lg text-center mt-2">
+                            <i class="fas fa-user-plus mr-1"></i>Admin Sign Up
+                        </a>
+                    </div>
+                    <div id="mobileUserInfo" class="hidden">
+                        <span class="text-gray-700 block mb-2">Hello, <span id="mobileUserName" class="font-semibold"></span></span>
+                        <a href="/logout" class="block text-red-600 hover:text-red-700 transition py-2">Logout</a>
+                    </div>
+                    <div id="mobileAdminInfo" class="hidden">
+                        <span class="text-orange-600 block mb-3"><i class="fas fa-shield-alt"></i> Admin: <span id="mobileAdminName" class="font-semibold"></span></span>
+                        <a href="/admin/dashboard" class="block text-gray-700 hover:text-orange-600 transition py-2">
+                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                        </a>
+                        <a href="/admin/add-car" class="block bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-center mt-2">
+                            <i class="fas fa-plus-circle mr-2"></i>Add Car
+                        </a>
+                        <a href="/admin/logout" class="block text-red-600 hover:text-red-700 transition py-2 mt-2">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-car text-purple-500 text-2xl"></i>
+                        <span class="text-xl font-bold">LuxeDrive</span>
+                    </div>
+                    <p class="text-gray-400">Premium car rental service with the finest selection of modern vehicles.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/" class="hover:text-purple-500 transition">Home</a></li>
+                        <li><a href="/cars" class="hover:text-purple-500 transition">Cars</a></li>
+                        <li><a href="/about" class="hover:text-purple-500 transition">About</a></li>
+                        <li><a href="/contact" class="hover:text-purple-500 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@luxedrive.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Main St, City</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-500 transition text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-500 transition text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-500 transition text-2xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-500 transition text-2xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/vanna-23/Car-Rental-System" class="text-gray-400 hover:text-purple-500 transition text-2xl"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 LuxeDrive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Check session
+        fetch('/api/check-session')
+            .then(res => res.json())
+            .then(data => {
+                if (data.admin) {
+                    // Admin is logged in
+                    document.getElementById('authButtons').classList.add('hidden');
+                    document.getElementById('adminInfo').classList.remove('hidden');
+                    document.getElementById('adminName').textContent = data.admin_name;
+                    
+                    document.getElementById('mobileAuthButtons').classList.add('hidden');
+                    document.getElementById('mobileAdminInfo').classList.remove('hidden');
+                    document.getElementById('mobileAdminName').textContent = data.admin_name;
+                } else if (data.logged_in) {
+                    // Regular user is logged in
+                    document.getElementById('authButtons').classList.add('hidden');
+                    document.getElementById('userInfo').classList.remove('hidden');
+                    document.getElementById('userName').textContent = data.name;
+                    document.getElementById('bookingsLinkDesktop').classList.remove('hidden');
+                    
+                    document.getElementById('mobileAuthButtons').classList.add('hidden');
+                    document.getElementById('mobileUserInfo').classList.remove('hidden');
+                    document.getElementById('mobileUserName').textContent = data.name;
+                    document.getElementById('bookingsLinkMobile').classList.remove('hidden');
+                }
+            });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

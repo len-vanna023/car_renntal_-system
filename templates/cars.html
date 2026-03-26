@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Cars - LuxeDrive{% endblock %}
+
+{% block content %}
+<!-- Weekend Discount Banner -->
+<div class="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-center gap-3 text-center">
+            <i class="fas fa-gift text-yellow-300 text-xl animate-bounce"></i>
+            <span class="font-bold">🎉 Weekend Special: 30% OFF Saturday & Sunday Rentals!</span>
+            <i class="fas fa-calendar-week text-yellow-300 text-xl"></i>
+        </div>
+    </div>
+</div>
+
+<!-- Page Header -->
+<section class="gradient-bg text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Explore Our Premium Fleet</h1>
+            <p class="text-xl text-purple-100">Choose from our wide selection of luxury and performance vehicles</p>
+        </div>
+    </div>
+</section>
+
+<!-- Category Filter -->
+<section class="bg-white shadow-md sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex flex-wrap gap-3 justify-center">
+            <a href="/cars?category=all" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'all' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-th mr-2"></i>All Cars
+            </a>
+            <a href="/cars?category=sports" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'sports' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-rocket mr-2"></i>Sports
+            </a>
+            <a href="/cars?category=luxury" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'luxury' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-gem mr-2"></i>Luxury
+            </a>
+            <a href="/cars?category=suv" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'suv' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-truck mr-2"></i>SUV
+            </a>
+            <a href="/cars?category=electric" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'electric' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-bolt mr-2"></i>Electric
+            </a>
+            <a href="/cars?category=sedan" class="category-filter px-6 py-2 rounded-full font-semibold transition {% if selected_category == 'sedan' %}bg-purple-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                <i class="fas fa-car mr-2"></i>Sedan
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Cars Grid -->
+<section class="py-12 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-6">
+            <p class="text-gray-600">
+                <span class="font-semibold text-gray-800">{{ cars|length }}</span> cars available
+                {% if selected_category != 'all' %}
+                    in <span class="text-purple-600 font-semibold">{{ selected_category|title }}</span> category
+                {% endif %}
+            </p>
+        </div>
+
+        {% if cars %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="carsGrid">
+            {% for car in cars %}
+            <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl" data-index="{{ loop.index0 }}">
+                <div class="relative h-56 overflow-hidden group">
+                    <img src="{{ car.image }}" alt="{{ car.name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-300"></div>
+                    <div class="absolute top-3 right-3 bg-purple-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold shadow-lg">
+                        {{ car.category }}
+                    </div>
+                    {% if car.color is defined %}
+                    <div class="absolute top-3 left-3 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-xs font-medium">
+                        <i class="fas fa-palette mr-1"></i>{{ car.color }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 truncate">{{ car.name }}</h3>
+                    <div class="flex items-center text-gray-600 text-sm mb-3">
+                        <i class="fas fa-users mr-2"></i>
+                        <span class="mr-4">{{ car.seats }} Seats</span>
+                        <i class="fas fa-cog mr-2"></i>
+                        <span>{{ car.transmission }}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-4 min-h-[32px]">
+                        {% for feature in car.features[:2] %}
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">{{ feature }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                        <div>
+                            <span class="text-2xl font-bold text-purple-600">${{ car.price }}</span>
+                            <span class="text-gray-500 text-sm">/day</span>
+                        </div>
+                        <a href="/car/{{ car.id }}" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm font-semibold">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Load More Button -->
+        <div class="mt-8 text-center" id="loadMoreContainer">
+            <button id="loadMoreBtn" onclick="loadMoreCars()" class="bg-purple-600 text-white px-10 py-4 rounded-lg hover:bg-purple-700 transition inline-flex items-center shadow-lg text-lg font-semibold">
+                <i class="fas fa-chevron-down mr-3"></i>
+                Load More Cars
+                <span id="loadMoreCount" class="ml-3 bg-purple-700 px-3 py-1 rounded-full text-sm"></span>
+            </button>
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <i class="fas fa-car text-gray-300 text-6xl mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">No cars found</h3>
+            <p class="text-gray-600 mb-6">Try selecting a different category</p>
+            <a href="/cars?category=all" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition inline-block">
+                View All Cars
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Info Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Flexible Rental</h3>
+                <p class="text-gray-600">Rent by the day, week, or month - whatever suits your needs</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check-circle text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Easy Booking</h3>
+                <p class="text-gray-600">Book online in minutes and pick up your car right away</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-star text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Premium Quality</h3>
+                <p class="text-gray-600">All vehicles are regularly maintained and detailed</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Load More Pagination
+let currentlyShown = 8;
+const ITEMS_PER_PAGE = 8;
+const allCarCards = document.querySelectorAll('.car-card');
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const loadMoreCount = document.getElementById('loadMoreCount');
+
+function loadMoreCars() {
+    let loaded = 0;
+    
+    allCarCards.forEach((card, index) => {
+        if (index >= currentlyShown && index < currentlyShown + ITEMS_PER_PAGE) {
+            card.style.display = 'block';
+            loaded++;
+            // Add animation
+            card.style.animation = 'fadeIn 0.5s ease-in';
+        }
+    });
+    
+    currentlyShown += ITEMS_PER_PAGE;
+    updateLoadMoreButton();
+    
+    // Smooth scroll to first newly loaded item
+    if (loaded > 0) {
+        setTimeout(() => {
+            const firstNewCard = allCarCards[currentlyShown - ITEMS_PER_PAGE];
+            if (firstNewCard) {
+                firstNewCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }, 100);
+    }
+}
+
+function updateLoadMoreButton() {
+    let hiddenCount = 0;
+    
+    allCarCards.forEach((card, index) => {
+        if (card.style.display === 'none' || index >= currentlyShown) {
+            hiddenCount++;
+        }
+    });
+    
+    if (hiddenCount === 0) {
+        document.getElementById('loadMoreContainer').style.display = 'none';
+    } else {
+        document.getElementById('loadMoreContainer').style.display = 'block';
+        const remaining = Math.min(ITEMS_PER_PAGE, hiddenCount);
+        loadMoreCount.textContent = `+${remaining}`;
+    }
+}
+
+// Add fade in animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize on page load
+updateLoadMoreButton();
+</script>
+{% endblock %}

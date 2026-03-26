@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Promotional Banner -->
+<div class="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white py-4 animate-gradient">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-fire text-2xl animate-pulse"></i>
+                <span class="font-bold text-lg">Hot Deals!</span>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <span class="bg-white text-purple-600 px-4 py-2 rounded-full text-sm font-bold shadow-lg transform hover:scale-105 transition">
+                    <i class="fas fa-calendar-week mr-1"></i>🎉 30% OFF Saturday & Sunday
+                </span>
+                <span class="bg-yellow-400 text-purple-800 px-4 py-2 rounded-full text-sm font-bold shadow-lg transform hover:scale-105 transition">
+                    <i class="fas fa-gift mr-1"></i>20% OFF First Booking
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+}
+</style>
+
+<!-- Hero Section -->
+<section class="gradient-bg text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="hero-title text-5xl font-bold mb-6 animate-fade-in">Drive Your Dream Car Today</h1>
+            <p class="text-xl mb-8 text-purple-100">Experience luxury and performance with our premium car rental service</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/cars" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">Browse Cars</a>
+                <a href="/signup" class="bg-purple-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 transition">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose LuxeDrive?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-car text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Premium Fleet</h3>
+                <p class="text-gray-600">Choose from our selection of luxury and high-performance vehicles</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">Fully Insured</h3>
+                <p class="text-gray-600">All vehicles come with comprehensive insurance coverage</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-headset text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-3">24/7 Support</h3>
+                <p class="text-gray-600">Our customer service team is always here to help you</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Cars Section -->
+<section class="py-16 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4 sm:mb-0">Featured Cars</h2>
+            <a href="/cars" class="text-purple-600 font-semibold hover:text-purple-700 transition">View All <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+        
+        {% if featured_cars %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for car in featured_cars %}
+            <div class="car-card bg-white rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="{{ car.image }}" alt="{{ car.name }}" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    <div class="absolute top-3 right-3 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        {{ car.category }}
+                    </div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">{{ car.name }}</h3>
+                    <div class="flex items-center text-gray-600 text-sm mb-3">
+                        <i class="fas fa-users mr-2"></i>
+                        <span class="mr-4">{{ car.seats }} Seats</span>
+                        <i class="fas fa-cog mr-2"></i>
+                        <span>{{ car.transmission }}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-4">
+                        {% for feature in car.features[:2] %}
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">{{ feature }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-3xl font-bold text-purple-600">${{ car.price }}</span>
+                            <span class="text-gray-500 text-sm">/day</span>
+                        </div>
+                        <a href="/car/{{ car.id }}" class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-5 py-2.5 rounded-lg hover:from-purple-700 hover:to-purple-800 transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-sm font-semibold">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+            <i class="fas fa-car text-6xl text-gray-300 mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-600 mb-2">No Cars Available</h3>
+            <p class="text-gray-500">All cars are currently booked. Check back soon!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="gradient-bg text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Hit the Road?</h2>
+        <p class="text-xl mb-8 text-purple-100">Sign up today and get 20% off your first rental!</p>
+        <a href="/signup" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition inline-block">
+            Create Account
+        </a>
+    </div>
+</section>
+{% endblock %}

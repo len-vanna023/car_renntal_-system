@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="gradient-bg text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="hero-title text-5xl font-bold mb-6 animate-fade-in">Get in Touch</h1>
+            <p class="text-xl text-purple-100 max-w-3xl mx-auto">
+                Have questions? We're here to help. Contact our team and we'll respond as soon as possible.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="bg-white p-8 rounded-2xl shadow-xl">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Send us a Message</h2>
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition"
+                               placeholder="John Doe">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition"
+                               placeholder="john@example.com">
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" id="phone" name="phone"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition"
+                               placeholder="+1 (555) 000-0000">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
+                        <select id="subject" name="subject" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition">
+                            <option value="">Select a topic</option>
+                            <option value="booking">Booking Inquiry</option>
+                            <option value="support">Customer Support</option>
+                            <option value="fleet">Fleet Information</option>
+                            <option value="partnership">Partnership Opportunities</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                        <textarea id="message" name="message" rows="5" required
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition resize-none"
+                                  placeholder="Tell us how we can help you..."></textarea>
+                    </div>
+                    
+                    <button type="submit"
+                            class="w-full bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition shadow-lg hover:shadow-xl">
+                        <i class="fas fa-paper-plane mr-2"></i>Send Message
+                    </button>
+                    
+                    <div id="formMessage" class="hidden p-4 rounded-lg"></div>
+                </form>
+            </div>
+            
+            <!-- Contact Information Cards -->
+            <div class="space-y-6">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Contact Information</h2>
+                
+                <!-- Office Location -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Main Office</h3>
+                            <p class="text-gray-600">
+                                1234 Luxury Drive<br>
+                                Beverly Hills, CA 90210<br>
+                                United States
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Phone -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Phone</h3>
+                            <p class="text-gray-600">
+                                <a href="tel:+15555551234" class="hover:text-purple-600 transition">+1 (555) 555-1234</a><br>
+                                <span class="text-sm text-gray-500">Available 24/7</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
+                            <p class="text-gray-600">
+                                <a href="mailto:info@luxedrive.com" class="hover:text-purple-600 transition">info@luxedrive.com</a><br>
+                                <a href="mailto:support@luxedrive.com" class="hover:text-purple-600 transition">support@luxedrive.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Business Hours -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-purple-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Business Hours</h3>
+                            <p class="text-gray-600">
+                                <strong>Monday - Friday:</strong> 8:00 AM - 8:00 PM<br>
+                                <strong>Saturday:</strong> 9:00 AM - 6:00 PM<br>
+                                <strong>Sunday:</strong> 10:00 AM - 5:00 PM<br>
+                                <span class="text-sm text-purple-600 mt-2 inline-block">
+                                    <i class="fas fa-headset mr-1"></i>24/7 Emergency Support
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Media -->
+                <div class="bg-gradient-to-br from-purple-600 to-blue-600 p-6 rounded-2xl shadow-lg text-white">
+                    <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-white/20 hover:bg-white/30 w-12 h-12 rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/20 hover:bg-white/30 w-12 h-12 rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/20 hover:bg-white/30 w-12 h-12 rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="bg-white/20 hover:bg-white/30 w-12 h-12 rounded-full flex items-center justify-center transition">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Find Us Here</h2>
+        <div class="bg-white p-4 rounded-2xl shadow-xl">
+            <div class="w-full h-96 bg-gray-200 rounded-xl overflow-hidden">
+                <!-- Embedded Google Map -->
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d258.6847234180256!2d105.23787648088727!3d13.514919236053132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1skm!2skh!4v1761196314229!5m2!1skm!2skh"
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="rounded-lg">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Frequently Asked Questions</h2>
+        <p class="text-center text-gray-600 mb-12">Quick answers to common questions</p>
+        
+        <div class="space-y-4">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">How do I book a car?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">Simply browse our fleet, select your desired vehicle, choose your rental dates, and complete the booking process online. You'll receive instant confirmation via email.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">What documents do I need to rent a car?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">You'll need a valid driver's license, proof of insurance, and a credit card. International customers also need a valid passport.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">Is insurance included?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">Yes! All our rentals include comprehensive insurance coverage. Additional premium coverage options are available at checkout.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">Can you deliver the car to my location?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">Absolutely! We offer premium concierge delivery and pickup service. Contact us for availability and pricing in your area.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">What is your cancellation policy?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">Free cancellation up to 48 hours before your rental start date. Cancellations within 48 hours are subject to a 25% fee.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition">
+                    <span class="font-semibold text-gray-800">Do you offer long-term rentals?</span>
+                    <i class="fas fa-chevron-down text-purple-600"></i>
+                </button>
+                <div class="faq-answer hidden px-6 py-4 bg-gray-50">
+                    <p class="text-gray-600">Yes! We offer discounted rates for weekly and monthly rentals. Contact us for custom long-term rental packages.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="gradient-bg text-white py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-4">Ready to Experience Luxury?</h2>
+        <p class="text-xl mb-8 text-purple-100">
+            Browse our premium fleet and book your dream car today.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/cars" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                View Our Fleet
+            </a>
+            <a href="/signup" class="bg-purple-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-900 transition border-2 border-white">
+                Create Account
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Contact Form Handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formMessage = document.getElementById('formMessage');
+        
+        // Simulate form submission
+        formMessage.textContent = 'Thank you for your message! We\'ll get back to you within 24 hours.';
+        formMessage.className = 'p-4 rounded-lg bg-green-100 text-green-700 border border-green-300';
+        formMessage.classList.remove('hidden');
+        
+        // Reset form
+        this.reset();
+        
+        // Hide message after 5 seconds
+        setTimeout(() => {
+            formMessage.classList.add('hidden');
+        }, 5000);
+    });
+    
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            // Close all other answers
+            document.querySelectorAll('.faq-answer').forEach(a => {
+                if (a !== answer) {
+                    a.classList.add('hidden');
+                }
+            });
+            
+            // Reset all other icons
+            document.querySelectorAll('.faq-question i').forEach(i => {
+                if (i !== icon) {
+                    i.classList.remove('fa-chevron-up');
+                    i.classList.add('fa-chevron-down');
+                }
+            });
+            
+            // Toggle current answer
+            answer.classList.toggle('hidden');
+            
+            // Toggle icon
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        });
+    });
+</script>
+{% endblock %}

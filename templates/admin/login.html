@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - LuxeDrive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="relative min-h-screen overflow-y-auto">
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), transparent 40%), radial-gradient(circle at 80% 0%, rgba(56,189,248,0.15), transparent 35%), radial-gradient(circle at 50% 100%, rgba(147,51,234,0.18), transparent 45%);"></div>
+
+    <header class="absolute top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl flex justify-between items-center text-white/80">
+        <a href="/" class="inline-flex items-center space-x-2 text-white/70 hover:text-white transition">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 backdrop-blur text-lg">
+                <i class="fas fa-long-arrow-alt-left"></i>
+            </span>
+            <span class="text-sm font-semibold uppercase tracking-widest">Back to LuxeDrive</span>
+        </a>
+        <div class="hidden sm:flex items-center space-x-6 text-sm">
+            <span class="inline-flex items-center space-x-2 text-white/60">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure Operations Portal</span>
+            </span>
+            <span class="inline-flex items-center space-x-2 text-white/60">
+                <i class="fas fa-clock"></i>
+                <span>24/7 Support</span>
+            </span>
+        </div>
+    </header>
+
+    <main class="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16">
+        <div class="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+            <section class="hidden lg:block">
+                <div class="relative">
+                    <div class="absolute -top-8 -left-10 h-28 w-28 rounded-full bg-purple-500/20 blur-2xl"></div>
+                    <div class="absolute -bottom-12 -right-12 h-32 w-32 rounded-full bg-blue-500/10 blur-2xl"></div>
+                    <div class="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-[32px] p-12 shadow-[0_40px_120px_-40px_rgba(59,130,246,0.6)]">
+                        <div class="flex items-center space-x-4 mb-12">
+                            <span class="inline-flex h-14 w-14 items-center justify-center rounded-3xl bg-white/10 text-purple-200 text-2xl">
+                                <i class="fas fa-shield-alt"></i>
+                            </span>
+                            <div>
+                                <p class="text-sm uppercase tracking-[0.3em] text-white/40">LuxeDrive Command</p>
+                                <h1 class="mt-2 text-4xl font-bold text-white">Welcome, Executive</h1>
+                                <p class="mt-2 text-white/60 text-sm">Your dashboard to orchestrate fleet, bookings, and VIP experiences.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 text-white/80">
+                            <article class="flex items-center space-x-4">
+                                <span class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 text-lg text-purple-200">
+                                    <i class="fas fa-crown"></i>
+                                </span>
+                                <div>
+                                    <p class="text-white font-semibold">Global oversight</p>
+                                    <p class="text-sm text-white/60">Monitor live reservations, fleet status, and member privileges in real time.</p>
+                                </div>
+                            </article>
+                            <article class="flex items-center space-x-4">
+                                <span class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 text-lg text-purple-200">
+                                    <i class="fas fa-bolt"></i>
+                                </span>
+                                <div>
+                                    <p class="text-white font-semibold">Rapid response</p>
+                                    <p class="text-sm text-white/60">Dispatch concierge experiences and manage premium upgrades instantly.</p>
+                                </div>
+                            </article>
+                            <article class="flex items-center space-x-4">
+                                <span class="flex h-12 w-12 items-center justify-center rounded-3xl bg-white/10 text-lg text-purple-200">
+                                    <i class="fas fa-user-lock"></i>
+                                </span>
+                                <div>
+                                    <p class="text-white font-semibold">Security-first</p>
+                                    <p class="text-sm text-white/60">Every action is protected with enterprise-grade encryption and auditing.</p>
+                                </div>
+                            </article>
+                        </div>
+
+                        <footer class="mt-12 border-t border-white/10 pt-6 flex items-center space-x-4">
+                            <div class="flex -space-x-3">
+                                <img src="https://i.pravatar.cc/80?img=21" alt="admin" class="h-10 w-10 rounded-full border border-white/20" />
+                                <img src="https://i.pravatar.cc/80?img=22" alt="admin" class="h-10 w-10 rounded-full border border-white/20" />
+                                <img src="https://i.pravatar.cc/80?img=23" alt="admin" class="h-10 w-10 rounded-full border border-white/20" />
+                            </div>
+                            <p class="text-sm text-white/60">Trusted by <span class="font-semibold text-white">120+</span> elite supervisors worldwide.</p>
+                        </footer>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="relative backdrop-blur-2xl bg-white/10 border border-white/10 rounded-[32px] p-10 shadow-[0_35px_120px_-40px_rgba(147,51,234,0.5)]">
+                    <div class="text-center mb-10">
+                        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-purple-100 text-sm">
+                            <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Authenticated staff gateway</span>
+                        </div>
+                        <h2 class="mt-6 text-3xl font-bold text-white">Administrator Access</h2>
+                        <p class="mt-3 text-white/60">Provide your registered admin details to continue.</p>
+                    </div>
+
+                    <div id="errorMessage" class="hidden border border-red-500/40 bg-red-500/10 text-red-200 px-4 py-3 rounded-2xl text-sm mb-6 flex items-start space-x-3">
+                        <span class="mt-1">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </span>
+                        <p id="errorText"></p>
+                    </div>
+
+                    <form id="adminLoginForm" class="space-y-6">
+                        <div>
+                            <label for="fullname" class="block text-sm font-medium text-white/70 mb-2">Full Name</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <input type="text" id="fullname" name="fullname" required
+                                    class="pl-11 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                                    placeholder="nana cute">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-white/70 mb-2">Email Address</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <input type="email" id="email" name="email" required
+                                    class="pl-11 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                                    placeholder="cute@gmail.com">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-white/70 mb-2">Phone Number</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <input type="tel" id="phone" name="phone" required
+                                    class="pl-11 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                                    placeholder="0987654321">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-white/70 mb-2">Password</label>
+                            <div class="relative group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/40">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <input type="password" id="password" name="password" required
+                                    class="pl-11 w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+                                    placeholder="123456789">
+                                <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-4 flex items-center text-white/40 hover:text-white/80 transition" aria-label="Toggle password visibility">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm text-white/60">
+                            <label class="inline-flex items-center space-x-2">
+                                <input type="checkbox" id="remember" class="h-4 w-4 rounded border-white/20 bg-white/10 text-purple-400 focus:ring-purple-400 focus:ring-offset-0">
+                                <span>Remember this device</span>
+                            </label>
+                            <a href="#" class="text-purple-200 hover:text-white transition">Forgot credentials?</a>
+                        </div>
+
+                        <button type="submit" id="loginButton"
+                            class="w-full inline-flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold shadow-lg shadow-purple-500/30 hover:from-purple-400 hover:to-indigo-400 focus:outline-none focus:ring-2 focus:ring-purple-200 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
+                            <span>Login</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <div class="mt-8 border-t border-white/10 pt-6 text-center text-sm text-white/60">
+                        <p>Need a customer account instead?
+                            <a href="/login" class="ml-2 inline-flex items-center space-x-1 text-purple-200 hover:text-white transition">
+                                <span>Switch to customer login</span>
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const passwordInput = document.getElementById('password');
+
+        adminLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const phone = document.getElementById('phone').value.trim();
+            const password = passwordInput.value;
+
+            errorMessage.classList.add('hidden');
+            errorText.textContent = '';
+            setLoadingState(true);
+
+            if (!fullname || !email || !phone || !password) {
+                showError('All fields are required.');
+                setLoadingState(false);
+                return;
+            }
+
+            try {
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fullname, email, phone, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    loginButton.querySelector('span').textContent = 'Verified';
+                    loginButton.querySelector('i').className = 'fas fa-check';
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    showError(data.message || 'Invalid credentials.');
+                    setLoadingState(false);
+                }
+            } catch (error) {
+                showError('An unexpected error occurred. Please try again.');
+                setLoadingState(false);
+            }
+        });
+
+        document.getElementById('togglePassword').addEventListener('click', () => {
+            const toggleIcon = document.querySelector('#togglePassword i');
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            toggleIcon.className = isPassword ? 'far fa-eye-slash' : 'far fa-eye';
+        });
+
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function setLoadingState(isLoading) {
+            if (isLoading) {
+                loginButton.disabled = true;
+                loginButton.classList.add('opacity-70', 'cursor-not-allowed');
+                loginButton.querySelector('span').textContent = 'Authenticating…';
+                loginButton.querySelector('i').className = 'fas fa-spinner fa-spin';
+            } else {
+                loginButton.disabled = false;
+                loginButton.classList.remove('opacity-70', 'cursor-not-allowed');
+                loginButton.querySelector('span').textContent = 'Login';
+                loginButton.querySelector('i').className = 'fas fa-arrow-right';
+            }
+        }
+    </script>
+</body>
+
+</html>
