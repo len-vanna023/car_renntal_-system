@@ -139,7 +139,7 @@
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-900">{{ car.brand }}</td>
                     <td class="px-6 py-4 text-sm text-gray-900">{{ car.category }}</td>
-                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ car.price_per_day|khr }}</td>
+                    <td class="px-6 py-4 text-sm font-semibold text-gray-900">{{ (car.price_per_day if car.price_per_day else car.price)|int }}\u17db</td>
                     <td class="px-6 py-4 text-sm text-gray-900">{{ car.seats }}</td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-full text-xs font-semibold

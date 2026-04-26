@@ -51,7 +51,7 @@
                 <span id="errorText"></span>
             </div>
 
-            <form id="addCarForm" class="space-y-6">
+            <form id="addCarForm" class="space-y-6" enctype="multipart/form-data">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-gray-700 text-sm font-semibold mb-2">
@@ -118,11 +118,18 @@
 
                 <div>
                     <label class="block text-gray-700 text-sm font-semibold mb-2">
-                        <i class="fas fa-image mr-2"></i>Image URL *
+                        <i class="fas fa-image mr-2"></i>Upload Image *
                     </label>
-                    <input type="url" name="image" required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 transition"
-                        placeholder="https://example.com/image.jpg">
+                    <label for="imageInput" class="flex flex-col items-center justify-center w-full min-h-[180px] px-6 py-8 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:border-orange-400 hover:bg-orange-50/40 transition cursor-pointer text-center">
+                        <div id="imageEmptyState">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-orange-500 mb-3"></i>
+                            <p class="text-base font-semibold text-gray-700">Choose a car photo</p>
+                            <p class="text-sm text-gray-500 mt-1">PNG, JPG, JPEG, WEBP, or GIF</p>
+                        </div>
+                        <img id="imagePreview" class="hidden mt-4 max-h-48 w-auto rounded-lg shadow-sm" alt="Selected car image preview">
+                        <p id="imageFileName" class="hidden mt-3 text-sm font-medium text-gray-600"></p>
+                    </label>
+                    <input id="imageInput" type="file" name="image" accept="image/*" required class="hidden">
                 </div>
 
                 <div>
@@ -154,26 +161,11 @@
             e.preventDefault();
             
             const formData = new FormData(e.target);
-            const features = formData.get('features').split(',').map(f => f.trim());
-            
-            const carData = {
-                name: formData.get('name'),
-                category: formData.get('category'),
-                price: parseInt(formData.get('price')),
-                seats: parseInt(formData.get('seats')),
-                transmission: formData.get('transmission'),
-                image: formData.get('image'),
-                features: features,
-                color: formData.get('color') || undefined
-            };
             
             try {
                 const response = await fetch('/admin/add-car', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(carData)
+                    body: formData
                 });
                 
                 const data = await response.json();
@@ -197,6 +189,34 @@
                 document.getElementById('errorText').textContent = 'An error occurred. Please try again.';
                 document.getElementById('successMessage').classList.add('hidden');
             }
+        });
+
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageFileName = document.getElementById('imageFileName');
+        const imageEmptyState = document.getElementById('imageEmptyState');
+
+        imageInput.addEventListener('change', () => {
+            const [file] = imageInput.files;
+            if (!file) {
+                imagePreview.classList.add('hidden');
+                imageFileName.classList.add('hidden');
+                imageEmptyState.classList.remove('hidden');
+                imagePreview.removeAttribute('src');
+                imageFileName.textContent = '';
+                return;
+            }
+
+            imageFileName.textContent = file.name;
+            imageFileName.classList.remove('hidden');
+            imageEmptyState.classList.add('hidden');
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                imagePreview.src = event.target.result;
+                imagePreview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
         });
     </script>
 </body>
